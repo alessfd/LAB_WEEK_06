@@ -14,30 +14,24 @@ class MainActivity : AppCompatActivity() {
     private val recyclerView: RecyclerView by lazy {
         findViewById(R.id.recycler_view)
     }
+
     private val catAdapter by lazy {
-//Glide is used here to load the images
-//Here we are passing the onClickListener function to the Adapter
-        CatAdapter(layoutInflater, GlideImageLoader(this), object:
+        CatAdapter(layoutInflater, GlideImageLoader(this), object :
             CatAdapter.OnClickListener {
-            //When this is triggered, the pop up dialog will be shown
             override fun onItemClick(cat: CatModel) = showSelectionDialog(cat)
         })
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//Setup the adapter for the recycler view
+
         recyclerView.adapter = catAdapter
-//Setup the layout manager for the recycler view
-//A layout manager is used to set the structure of the item views
-//For this tutorial, we're using the vertical linear structure
-        recyclerView.layoutManager = LinearLayoutManager(this,
-            LinearLayoutManager.VERTICAL, false)
-        //Instantiate ItemTouchHelper for the swipe to delete callback and
-//attach it to the recycler view
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
         val itemTouchHelper = ItemTouchHelper(catAdapter.swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
-//Add data to the model list in the adapter
+
         catAdapter.setData(
             listOf(
                 CatModel(
@@ -60,18 +54,65 @@ class MainActivity : AppCompatActivity() {
                     "Curious George",
                     "Award winning investigator",
                     "https://cdn2.thecatapi.com/images/bar.jpg"
+                ),
+                CatModel(
+                    Gender.Female,
+                    CatBreed.BalineseJavanese,
+                    "Mochi",
+                    "Always naps on keyboards",
+                    "https://cdn2.thecatapi.com/images/5vm.jpg"
+                ),
+                CatModel(
+                    Gender.Male,
+                    CatBreed.ExoticShorthair,
+                    "Tommy",
+                    "Chonk level 9000",
+                    "https://cdn2.thecatapi.com/images/bpc.jpg"
+                ),
+                CatModel(
+                    Gender.Male,
+                    CatBreed.AmericanCurl,
+                    "Leo",
+                    "Hunter of dust bunnies",
+                    "https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg"
+                ),
+                CatModel(
+                    Gender.Female,
+                    CatBreed.ExoticShorthair,
+                    "Luna",
+                    "Can open the fridge somehow",
+                    "https://cdn2.thecatapi.com/images/5n6.jpg"
+                ),
+                CatModel(
+                    Gender.Female,
+                    CatBreed.BalineseJavanese,
+                    "Cleo",
+                    "Screams at 3 AM for attention",
+                    "https://cdn2.thecatapi.com/images/9fj.jpg"
+                ),
+                CatModel(
+                    Gender.Male,
+                    CatBreed.AmericanCurl,
+                    "Milo",
+                    "Thinks he's a dog",
+                    "https://cdn2.thecatapi.com/images/ckg.jpg"
+                ),
+                CatModel(
+                    Gender.Unknown,
+                    CatBreed.ExoticShorthair,
+                    "Shadow",
+                    "Disappears every time you need him",
+                    "https://cdn2.thecatapi.com/images/8oo.jpg"
                 )
             )
         )
     }
-//This will create a pop up dialog when one of the items from the recycler view is clicked.
+
     private fun showSelectionDialog(cat: CatModel) {
         AlertDialog.Builder(this)
-//Set the title for the dialog
             .setTitle("Cat Selected")
-//Set the message for the dialog
             .setMessage("You have selected cat ${cat.name}")
-//Set if the OK button should be enabled
-            .setPositiveButton("OK") { _, _ -> }.show()
+            .setPositiveButton("OK") { _, _ -> }
+            .show()
     }
 }
